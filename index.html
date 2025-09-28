@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Aviator Predictor</title>
+  <title>Emmanuel Hacker</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root{
@@ -26,7 +26,10 @@
       border:1px solid rgba(255,255,255,.08);
       border-radius:24px; padding:26px 22px; box-shadow:0 20px 60px rgba(0,0,0,.45);
     }
+    .flag{width:64px; display:block; margin:0 auto 8px}
     .title{ text-align:center; font-weight:800; margin:2px 0 8px; font-size:28px; color:#ff7a00; }
+    .subtitle{ text-align:center; color:var(--muted); font-size:14px; margin-bottom:18px }
+    .game{margin-bottom:10px;}
     label.block{display:block; font-weight:600; margin-top:14px; margin-bottom:8px; text-align:left}
     .input{ width:100%; background:#121a2b; color:#e9edf3; border:1px solid rgba(255,255,255,.1); border-radius:12px; padding:12px 14px; outline:none; }
     .btn{ margin-top:16px; width:100%; border:0; border-radius:14px; padding:14px 16px; font-weight:800; font-size:16px; color:#071018; background:linear-gradient(90deg, var(--orange), var(--green)); cursor:pointer; }
@@ -41,10 +44,12 @@
 <body>
   <div class="wrap">
     <div class="card">
-      <div class="title">Aviator Predictor</div>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Flag_of_Nigeria.svg/1200px-Flag_of_Nigeria.svg.png" class="flag" alt="Nigeria"/>
+      <div class="title">Emmanuel Hacker</div>
+      <div class="subtitle">Fast signals • Made in Nigeria • NGN</div>
 
       <label class="block" for="acc">Account ID</label>
-      <input id="acc" class="input" placeholder="Example: 9876543210" maxlength="10" inputmode="numeric" />
+      <input id="acc" class="input" placeholder="9876543210" maxlength="10" inputmode="numeric" />
 
       <button class="btn" id="start" disabled>Start</button>
       <div class="progress" id="progress"><div class="bar"></div></div>
@@ -67,16 +72,16 @@
     let adminSeries = [];
     let seriesIndex = 0;
 
-    // Валидация ID
+    // Проверка ID
     acc.addEventListener('input', ()=>{
       acc.value = acc.value.replace(/\D/g,'').slice(0,10);
       start.disabled = !(/^\d{10}$/.test(acc.value));
     });
 
-    // Рандомный коэффициент
+    // Рандом
     function randomMultiplier(){ return (Math.random() * (10 - 1.01) + 1.01).toFixed(2); }
 
-    // Берём серию из localStorage (админка её туда сохраняет)
+    // Подгрузка серии из localStorage
     function getAdminSeries(){
       const saved = localStorage.getItem('aviatorSeries');
       if(saved){
@@ -110,7 +115,7 @@
     }
 
     start.addEventListener('click', ()=>{
-      getAdminSeries(); // подтягиваем данные из админки
+      getAdminSeries(); // подтягиваем ряд из админки
 
       progress.style.display = 'block';
       const bar = progress.querySelector('.bar');
