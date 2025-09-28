@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Emmanuel Hacker</title>
+  <title>Aviator Predictor</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root{
@@ -16,9 +16,7 @@
     html,body{height:100%}
     body{
       margin:0; font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif; color:#e9edf3;
-      background: radial-gradient(1000px 600px at 20% -10%, rgba(255,122,0,.18), transparent 60%),
-      radial-gradient(900px 600px at 120% 0%, rgba(12,184,106,.18), transparent 60%),
-      #0b0f14;
+      background:#0b0f14;
       display:flex; align-items:center; justify-content:center; padding:20px;
     }
     .wrap{ width:min(480px, 100%); }
@@ -28,144 +26,62 @@
       border:1px solid rgba(255,255,255,.08);
       border-radius:24px; padding:26px 22px; box-shadow:0 20px 60px rgba(0,0,0,.45);
     }
-    .flag{width:64px; display:block; margin:0 auto 8px}
-    .title{ text-align:center; font-weight:800; margin:2px 0 8px; font-size:28px; }
-    .subtitle{ text-align:center; color:var(--muted); font-size:14px; margin-bottom:18px }
-    .badges{display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin:0 0 14px}
-    .badge{font-size:11px; color:#d8dee9; background:#1a2336; padding:6px 10px; border-radius:999px}
+    .title{ text-align:center; font-weight:800; margin:2px 0 8px; font-size:28px; color:#ff7a00; }
     label.block{display:block; font-weight:600; margin-top:14px; margin-bottom:8px; text-align:left}
-    .games{display:flex; gap:10px; flex-direction:row;}
-    .game-column{display:flex; flex-direction:column; gap:10px; flex:1;}
-    .game{display:flex; align-items:center; gap:8px; padding:10px 12px; border-radius:12px; cursor:pointer; background:#121a2b; border:1px solid rgba(255,255,255,.08);}
-    .game input{ accent-color:var(--green) }
     .input{ width:100%; background:#121a2b; color:#e9edf3; border:1px solid rgba(255,255,255,.1); border-radius:12px; padding:12px 14px; outline:none; }
-    .hint{font-size:12px; color:var(--muted); margin-top:6px; text-align:left}
-    .warn{ display:none; color:#ff6767; font-size:13px; margin-top:8px; text-align:left }
-    .btn{ margin-top:16px; width:100%; border:0; border-radius:14px; padding:14px 16px; font-weight:800; font-size:16px; color:#071018; background:linear-gradient(90deg, var(--orange), var(--green));}
+    .btn{ margin-top:16px; width:100%; border:0; border-radius:14px; padding:14px 16px; font-weight:800; font-size:16px; color:#071018; background:linear-gradient(90deg, var(--orange), var(--green)); cursor:pointer; }
     .btn:disabled{opacity:.5; cursor:not-allowed}
     .progress{ display:none; height:10px; background:#101625; border-radius:999px; overflow:hidden; margin-top:14px; border:1px solid rgba(255,255,255,.08) }
     .bar{ height:100%; width:0; background:linear-gradient(90deg, var(--orange), var(--green)); animation: fill 2.4s linear forwards }
     @keyframes fill{ from{width:0} to{width:100%} }
     .message-box{ margin-top:16px; padding:14px; border-radius:12px; background:#1a2336; border:1px solid rgba(255,255,255,.08); font-size:14px; min-height:60px; display:flex; flex-direction:column; align-items:center; justify-content:center; color:var(--muted); }
-    #signalText{ font-size:14px; color:var(--muted); }
-    #signalValue{ margin-top:8px; min-height:28px; font-weight:800; text-align:center; font-size:18px; }
-    #signalValue.aviator{ color:var(--green); font-size:20px; }
-    #signalValue.penalty{ color:#ffd54f; font-size:20px; }
-    #signalValue.mines{ color:var(--muted); font-size:14px; font-weight:600; }
-    .mines-board{ display:grid; grid-template-columns:repeat(5,1fr); gap:6px; margin-top:12px; }
-    .cell{ width:40px; height:40px; border-radius:6px; background:#121a2b; display:flex; align-items:center; justify-content:center; font-size:18px; color:#fff; transition:background .2s }
-    .cell.mine{ background:#ff4d4d }
-    .cta{ margin-top:18px; display:block; text-align:center; text-decoration:none; font-weight:700; color:#fff; background: linear-gradient(90deg, #1b57f2, #06b6d4); padding:12px 14px; border-radius:12px; }
-    .meta{display:flex; justify-content:space-between; align-items:center; margin-top:14px; color:var(--muted); font-size:13px}
-    .footer{ text-align:center; color:#a6b0be; font-size:12px; margin-top:14px }
-    @media (max-width:420px){ .games{flex-direction:column;} .title{font-size:24px} }
+    #signalValue{ margin-top:8px; min-height:28px; font-weight:800; text-align:center; font-size:20px; color:#0cb86a; }
   </style>
 </head>
 <body>
   <div class="wrap">
     <div class="card">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Flag_of_Nigeria.svg/1200px-Flag_of_Nigeria.svg.png" class="flag" alt="Nigeria"/>
-      <div class="title">Emmanuel Hacker</div>
-      <div class="subtitle">Fast signals • Made in Nigeria • NGN</div>
-
-      <div class="badges">
-        <div class="badge">🔒 Safe</div>
-        <div class="badge">✅ Guarantee</div>
-        <div class="badge">✨ Based on AI</div>
-      </div>
-
-      <label class="block">🎮 Game Selection</label>
-      <div class="games">
-        <div class="game-column">
-          <label class="game"><input type="radio" name="game" value="Aviator" checked> <span class="icon">✈️</span> Aviator</label>
-          <label class="game"><input type="radio" name="game" value="Penalty"> <span class="icon">⚽️</span> Penalty</label>
-        </div>
-        <div class="game-column">
-          <label class="game"><input type="radio" name="game" value="Mines"> <span class="icon">💎</span> Mines</label>
-        </div>
-      </div>
+      <div class="title">Aviator Predictor</div>
 
       <label class="block" for="acc">Account ID</label>
       <input id="acc" class="input" placeholder="Example: 9876543210" maxlength="10" inputmode="numeric" />
-      <div class="hint">digits 10 • NGN currency</div>
-      <div class="warn" id="warn">Please enter the correct 10 digit ID</div>
-
-      <!-- Admin inputs -->
-      <label class="block" for="adminCoef">Admin Coefficient (single)</label>
-      <input id="adminCoef" class="input" placeholder="e.g. 3.45" inputmode="decimal" />
-      <div class="hint">Leave empty to skip</div>
-
-      <label class="block" for="adminSeries">Admin Series (comma separated)</label>
-      <input id="adminSeries" class="input" placeholder="e.g. 2.15, 3.40, 1.85" />
-      <div class="hint">If filled, signals follow your list</div>
 
       <button class="btn" id="start" disabled>Start</button>
       <div class="progress" id="progress"><div class="bar"></div></div>
 
       <div id="signalsBox" class="message-box" style="display:none;">
         <div id="signalText">📡 Waiting for signals...</div>
-        <div id="signalValue" class=""></div>
-        <div id="minesBoard" class="mines-board" style="display:none;"></div>
+        <div id="signalValue"></div>
       </div>
-
-      <a class="cta" id="depositLink" href="https://reffpa.com/L?tag=d_4739826m_14987c_&site=4739826&ad=14987&r=registration" target="_blank">💳 Make a deposit</a>
-
-      <div class="meta">
-        <div>🔵 Online: <span id="online">143</span></div>
-      </div>
-
-      <div class="footer">MADE IN <strong>HackerHouse</strong> • AFRICA</div>
     </div>
   </div>
 
   <script>
-    // Online counter
-    const onlineEl = document.getElementById('online');
-    setInterval(()=>{ const base=140; const jitter=Math.floor(Math.random()*8)-4; onlineEl.textContent = base + jitter; },2500);
-
-    // Elements
     const acc = document.getElementById('acc');
     const start = document.getElementById('start');
-    const warn = document.getElementById('warn');
     const progress = document.getElementById('progress');
     const signalsBox = document.getElementById('signalsBox');
     const signalText = document.getElementById('signalText');
     const signalValue = document.getElementById('signalValue');
-    const minesBoard = document.getElementById('minesBoard');
-    const adminCoefEl = document.getElementById('adminCoef');
-    const adminSeriesEl = document.getElementById('adminSeries');
 
-    // State
     let adminSeries = [];
     let seriesIndex = 0;
 
-    // Validate ID
+    // Валидация ID
     acc.addEventListener('input', ()=>{
       acc.value = acc.value.replace(/\D/g,'').slice(0,10);
-      const ok = /^\d{10}$/.test(acc.value);
-      start.disabled = !ok;
-      warn.style.display = ok ? 'none' : 'block';
+      start.disabled = !(/^\d{10}$/.test(acc.value));
     });
 
+    // Рандомный коэффициент
     function randomMultiplier(){ return (Math.random() * (10 - 1.01) + 1.01).toFixed(2); }
 
-    function generateMinesBoard(){
-      minesBoard.innerHTML = '';
-      minesBoard.style.display = 'grid';
-      const indices = Array.from({length:25}, (_,i)=>i);
-      const mines = [];
-      while(mines.length < 5){
-        const idx = Math.floor(Math.random()*indices.length);
-        mines.push(indices.splice(idx,1)[0]);
-      }
-      for(let i=0;i<25;i++){
-        const cell = document.createElement('div');
-        cell.className = 'cell';
-        if(mines.includes(i)){
-          cell.classList.add('mine');
-          cell.textContent = '💣';
-        }
-        minesBoard.appendChild(cell);
+    // Берём серию из localStorage (админка её туда сохраняет)
+    function getAdminSeries(){
+      const saved = localStorage.getItem('aviatorSeries');
+      if(saved){
+        adminSeries = saved.split(',').map(s=>s.trim()).filter(Boolean);
+        seriesIndex = 0;
       }
     }
 
@@ -178,64 +94,30 @@
       return null;
     }
 
-    function generateSignal(game){
+    function generateSignal(){
       const now = new Date().toLocaleTimeString();
-      signalText.textContent = `🎯 [${now}] ${game}`;
+      signalText.textContent = `🎯 [${now}] Aviator`;
 
-      if(game === 'Mines'){
-        signalValue.className = 'mines';
-        signalValue.textContent = 'Safe moves generated';
-        generateMinesBoard();
-        return;
-      }
-
-      if(game === 'Penalty'){
-        const directions = ["Top Left","Top Right","Center","Bottom Left","Bottom Right"];
-        const dir = directions[Math.floor(Math.random()*directions.length)];
-        signalValue.className = 'penalty';
-        signalValue.textContent = dir;
-        minesBoard.style.display = 'none';
-        return;
-      }
-
-      // Aviator
-      let multiplier;
       const nextAdmin = getNextAdminSignal();
-      if(nextAdmin){
-        multiplier = nextAdmin;
-      } else if(adminCoefEl.value.trim() && !isNaN(parseFloat(adminCoefEl.value.trim()))){
-        multiplier = 'x' + parseFloat(adminCoefEl.value.trim()).toFixed(2);
-      } else {
-        multiplier = 'x' + randomMultiplier();
-      }
-      signalValue.className = 'aviator';
+      let multiplier = nextAdmin ? nextAdmin : 'x' + randomMultiplier();
+
       signalValue.textContent = multiplier;
-      minesBoard.style.display = 'none';
     }
 
     function startSignals(){
-      const selected = document.querySelector('input[name="game"]:checked');
-      const game = selected ? selected.value : 'Aviator';
       signalsBox.style.display = 'flex';
-      generateSignal(game);
+      generateSignal();
     }
 
     start.addEventListener('click', ()=>{
-      // Read series on start
-      const rawSeries = adminSeriesEl.value.trim();
-      if(rawSeries){
-        adminSeries = rawSeries.split(',').map(s => s.trim()).filter(Boolean);
-        seriesIndex = 0;
-      } else {
-        adminSeries = [];
-        seriesIndex = 0;
-      }
+      getAdminSeries(); // подтягиваем данные из админки
 
       progress.style.display = 'block';
       const bar = progress.querySelector('.bar');
       bar.style.animation = 'none';
       void bar.offsetWidth;
       bar.style.animation = 'fill 2.4s linear forwards';
+
       setTimeout(()=>{
         progress.style.display = 'none';
         startSignals();
